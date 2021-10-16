@@ -1,23 +1,33 @@
-import logo from './logo.svg';
 import './App.css';
-
+import React,{useState,useEffect} from 'react';
 function App() {
+
+  const [name,setName] = useState({
+    nombre:'invitado'
+  });
+
+  
+  const handleChange = (event) =>{
+    setName({
+      ...name,
+      [event.target.name] : event.target.value
+    })
+  }
+  useEffect(()=>{
+    localStorage.setItem('name',JSON.stringify(name))
+  },[name]);
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <h2>Bienvenido a la pagina</h2>
+        <div>
+          <h3>Ingrese su nombre </h3>
+          <form>
+            <input id="name" type="text" name ="nombre" placeholder="who are you" onChange={handleChange}></input>
+          </form>
+        </div>
+        <p>Hola {name.nombre}</p>
     </div>
   );
 }
