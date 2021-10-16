@@ -1,31 +1,27 @@
 import './App.css';
 import React,{useState,useEffect,useRef} from 'react';
 function App() {
-
   const [name,setName] = useState(() =>{
     const saved = localStorage.getItem('name');
     const initalValue = JSON.parse(saved);
     return initalValue || " ";
   });
-
   const usernameRef = useRef();
 
+  useEffect(()=>{
+    localStorage.setItem('name',JSON.stringify(name))
+  },[name]);
   
   const handleChange = () =>{
     const valueinput = usernameRef.current;
     setName (valueinput.value);
   }
-  useEffect(()=>{
-    localStorage.setItem('name',JSON.stringify(name))
-  },[name]);
-
-
+  
   return (
     <div className="App">
-        <h2>Bienvenido a mi pagina</h2>
-        <div>
-          <h3>Ingrese su nombre </h3>
-          <form>
+      <h1>Felicidades por llegar a Octubre del 2021 </h1>
+      <div id="container">
+          <form id="formulario">
             <input 
             id="name" 
             type="text" 
@@ -35,8 +31,14 @@ function App() {
             >
             </input>
           </form>
-        </div>
-        <p>Hola {name}</p>
+      </div>
+      <div>
+        <p id="visitante">Hola {name}</p>
+        <p>Ha sido un largo camino pero ya falta poco para acabar el 2021, ven y tomate un descanso</p>
+      </div>
+      <div id="imagen">
+
+      </div>
     </div>
   );
 }
