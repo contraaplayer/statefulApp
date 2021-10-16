@@ -1,17 +1,19 @@
 import './App.css';
-import React,{useState,useEffect} from 'react';
+import React,{useState,useEffect,useRef} from 'react';
 function App() {
 
-  const [name,setName] = useState({
-    nombre:'invitado'
+  const [name,setName] = useState(() =>{
+    const saved = localStorage.getItem('name');
+    const initalValue = JSON.parse(saved);
+    return initalValue || " ";
   });
 
+  const usernameRef = useRef();
+
   
-  const handleChange = (event) =>{
-    setName({
-      ...name,
-      [event.target.name] : event.target.value
-    })
+  const handleChange = () =>{
+    const valueinput = usernameRef.current;
+    setName (valueinput.value);
   }
   useEffect(()=>{
     localStorage.setItem('name',JSON.stringify(name))
@@ -20,14 +22,21 @@ function App() {
 
   return (
     <div className="App">
-        <h2>Bienvenido a la pagina</h2>
+        <h2>Bienvenido a mi pagina</h2>
         <div>
           <h3>Ingrese su nombre </h3>
           <form>
-            <input id="name" type="text" name ="nombre" placeholder="who are you" onChange={handleChange}></input>
+            <input 
+            id="name" 
+            type="text" 
+            ref={usernameRef}
+            placeholder="who are you" 
+            onChange={handleChange}
+            >
+            </input>
           </form>
         </div>
-        <p>Hola {name.nombre}</p>
+        <p>Hola {name}</p>
     </div>
   );
 }
